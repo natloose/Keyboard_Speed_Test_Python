@@ -9,3 +9,10 @@ This project will calculate your keyboard typing speed through Words Per Minute(
    
    
    
+![1](https://user-images.githubusercontent.com/60553621/97471360-8979e300-1940-11eb-93c1-0a2f54af26d5.JPG)
+
+
+![Correct](https://user-images.githubusercontent.com/60553621/97471390-94347800-1940-11eb-85d5-60c370c1dbb2.JPG)
+
+
+![Incorrect](https://user-images.githubusercontent.com/60553621/97471435-a44c5780-1940-11eb-9e9e-22f54cf667b2.JPG)
