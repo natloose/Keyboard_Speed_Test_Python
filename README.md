@@ -8,6 +8,9 @@ This project will calculate your keyboard typing speed through Words Per Minute(
    If your input does not equal the randomly generated sentence you will recieve a "nice" feedback message letting you know.
    
    
+   
+   
+   
  ## Opening Screen
  
 ![1](https://user-images.githubusercontent.com/60553621/97471360-8979e300-1940-11eb-93c1-0a2f54af26d5.JPG)
