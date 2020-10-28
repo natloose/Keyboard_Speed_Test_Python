@@ -9,6 +9,7 @@ This project will calculate your keyboard typing speed through Words Per Minute(
    
    
  Opening Screen
+ 
 ![1](https://user-images.githubusercontent.com/60553621/97471360-8979e300-1940-11eb-93c1-0a2f54af26d5.JPG)
 
 
