@@ -68,7 +68,7 @@ class Home:
 
 # generate a random sentence
     def random_sent(self):
-        with open('sentences.txt', 'r') as f:
+        with open('responses/sentences.txt', 'r') as f:
             self.r_sentence.destroy()
             content = f.read()
             sentences = content.splitlines()
@@ -94,7 +94,7 @@ class Home:
 
         self.response.destroy()
 
-        with open('incorrect.txt', 'r') as f:
+        with open('responses/incorrect.txt', 'r') as f:
             content = f.read()
             fails = content.splitlines()
             fail = random.choice(fails)
