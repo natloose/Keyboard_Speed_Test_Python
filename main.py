@@ -12,10 +12,8 @@ class Home:
         self.master.geometry("800x500+550+200")
         self.master.config(bg="black")
         self.wpm = Label()
-        self.total_time = 0
         self.sentence = ""
         self.start = 0
-
 
         # Top (t) frame
         t = Frame(master, width=800, height=100, bg="black")
@@ -40,7 +38,7 @@ class Home:
         entry_frame.pack(padx=15, pady=15)
         entry_frame.propagate(0)
         self.entry = Entry(entry_frame, font=("calibri", 16), bg="black", fg="white",
-                      insertbackground="white")
+                            insertbackground="white")
         self.entry.pack(expand=TRUE, fill=BOTH)
         self.entry.focus_set()
 
@@ -140,7 +138,6 @@ class Home:
     def button(self):
         return self.button
 
-
     def u_entry(self):
         u_input = self.entry.get()
         if self.sentence == u_input:
@@ -162,5 +159,3 @@ class Home:
 root = Tk()
 h = Home(root)
 root.mainloop()
-
-
