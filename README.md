@@ -1,6 +1,5 @@
 # Python Keyboard Speed Test
-
-This project will calculate your keyboard typing speed through Words Per Minute(WPM).
+Calculate your keyboard typing speed through Words Per Minute(WPM).
 
 1. Press START to receive a randomly selected sentence that you must write down in the input section below in as quick as time as possible. 
 2. Once finished you can either click the STOP! button or click ENTER on your keyboard to stop.
