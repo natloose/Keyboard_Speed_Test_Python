@@ -16,6 +16,7 @@ title = Label(master, text="Typing Speed Test", font=("Comic Sans MS", 32), fg="
 title.place(x=200, y=25)
 
 
+# Generate random sentence
 def random_sent():
     global sentence
     with open('responses/sentences.txt', 'r') as f:
@@ -37,7 +38,6 @@ entry.place(x=50, y=220, width=700, height=50)
 
 def start():
     global started
-
     # starts the clock
     started = time.time()
     # Grabs and displays random sentence
@@ -68,22 +68,27 @@ def stop(event=None):
     # total time rounded 3 dp
     total = end - started
     total_rounded = round(total, 3)
+    # Display WPM
     words_per_minute()
 
     print("Stopped. Hit START to go again.")
 
     # Clock stopped display START! button
     button = Button(master, text="START", font="calibri, 18", fg="white",
-                                command=lambda: [button.place_forget(), start()])
+                                command=lambda: [button.place_forget(), start(), total_time.place_forget(),
+                                                 wpm.place_forget(), response.place_forget()])
     button.place(x=350, y=325, width=100)
     button.config(bg="green")
     total_time = Label(master, text=f"TIME: {total_rounded}s", fg="lightgrey", bg="black",
                                 font="calibri 18")
+    response = Label(master, text=f"Well Done!", fg="green", font=("calibri", 18), bg="black")
+    response.place(x=342, y=280)
     total_time.place(x=330, y=440)
 
 
 # Display incorrect entry message
 def incorrect_input():
+    global response
     with open('responses/incorrect.txt', 'r') as f:
         content = f.read()
         fails = content.splitlines()
@@ -100,14 +105,14 @@ def incorrect_input():
 def check_entry(event=None):
     user_input = entry.get()
     if sentence == user_input:
-        response = Label(master, text=f"Well Done!", fg="green", font=("calibri", 18), bg="black")
-        response.place(x=342, y=280)
         stop()
     else:
         incorrect_input()
 
 
+# Calculate WPM
 def words_per_minute():
+    global wpm
     keystrokes = len(sentence)
     words_per_min = round(keystrokes * 60) / total / 5
     wpm_rounded = int(words_per_min)
