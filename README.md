@@ -17,14 +17,15 @@ Calculate your keyboard typing speed in words per minute (WPM).
 ![first](https://user-images.githubusercontent.com/60553621/100239085-e3ae9980-2f28-11eb-8ffb-05daa5270749.JPG)
 
 
-## Incorrect Input
+## Start
 
 ![second](https://user-images.githubusercontent.com/60553621/100239121-ed380180-2f28-11eb-965c-ee0279cea5a6.JPG)
 
-## Correct Input 
+## Incorrect Input
 
 ![third](https://user-images.githubusercontent.com/60553621/100239120-ed380180-2f28-11eb-8e52-8d6f85eee1b4.JPG)
 
+## Correct
 
 ![fourth](https://user-images.githubusercontent.com/60553621/100239095-e4dfc680-2f28-11eb-935f-ede4e860c046.JPG)
 
