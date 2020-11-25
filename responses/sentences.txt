@@ -1,5 +1,4 @@
 To understand recursion you must first understand recursion
-An SQL query goes into a bar, walks up to two tables and asks, 'Can I join you?
 What's the object-oriented way to become wealthy? Inheritance
 Why do sin and tan work? Just cos
 I would tell you a joke about UDP, but you would never get it

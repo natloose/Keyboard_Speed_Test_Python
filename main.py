@@ -2,160 +2,118 @@ from tkinter import *
 import random
 import time
 
+global entry
 
-class Home:
-    def __init__(self, master):
+# Tk window creation
+master = Tk()
+master.title("Speed Type Test")
+master.geometry("800x500+550+200")
+master.config(bg="black")
 
-        # create main page
-        self.master = master
-        self.master.title("Speed Type Test")
-        self.master.geometry("800x500+550+200")
-        self.master.config(bg="black")
-        self.wpm = Label()
-        self.sentence = ""
-        self.start = 0
 
-        # Top (t) frame
-        t = Frame(master, width=800, height=100, bg="black")
-        t.pack(pady=10, padx=10)
-        # Propagate tells frame to not let its children determine it's size
-        t.pack_propagate(0)
+# Title
+title = Label(master, text="Typing Speed Test", font=("Comic Sans MS", 32), fg="white", bg="black")
+title.place(x=200, y=25)
 
-        title = Label(t, text="Typing Speed Test", font=("Comic Sans MS", 32), fg="white", bg="black")
-        title.pack(pady=15)
 
-        self.m = Frame(master, width=800, height=50, bg="black")
-        self.m.pack(pady=10, padx=10)
-        self.m.propagate(0)
+def random_sent():
+    global sentence
+    with open('responses/sentences.txt', 'r') as f:
+        content = f.read()
+        sentences = content.splitlines()
+        sentence = random.choice(sentences)
+        random_sentence = Label(master, text=f"{sentence}", fg="white", font=("calibri", 17), bg="black")
+        random_sentence.place(x=50, y=150, width=700, height=40)
 
-        # display random sentence
-        self.r_sentence = Label(self.m, textvariable=self.random_sent, bg="black")
-        self.r_sentence.pack()
 
-        # Entry frame
-        entry_frame = Frame(self.master, width=800, height=50, bg="black",
-                            highlightbackground="green", highlightcolor="green", highlightthickness=3)
-        entry_frame.pack(padx=15, pady=15)
-        entry_frame.propagate(0)
-        self.entry = Entry(entry_frame, font=("calibri", 16), bg="black", fg="white",
-                            insertbackground="white")
-        self.entry.pack(expand=TRUE, fill=BOTH)
-        self.entry.focus_set()
+# display random sentence
+r_sentence = Label(master, bg="black", textvariable=random_sent, fg="white")
 
-        # Bottom (b) frame
-        self.b = Frame(self.master, height=50, width=800, bg="black")
-        self.b.pack()
-        self.b.pack_propagate(0)
+# User entry box
+entry = Entry(master, font=("calibri", 16), bg="black", fg="white", highlightbackground="green",
+              highlightcolor="green", highlightthickness=3, insertbackground="white")
+entry.place(x=50, y=220, width=700, height=50)
 
-        # Default equal/incorrect input labels
-        self.response = Label(self.b, fg="#ff3300", font=("calibri", 18), bg="black", width=100)
 
-        # Frame that holds START/STOP
-        self.go_frame = Frame(self.master, width=800, height=70, bg="black")
-        self.go_frame.bind("<Return>", self.started)
-        self.go_frame.pack()
-        self.go_frame.propagate(0)
+def start():
+    global started
 
-        # START Button
-        self.button = Button(self.go_frame, text="START", font="calibri, 18", command=self.started, fg="white")
-        self.button.pack(side=TOP, pady=10)
-        self.button.config(bg="green")
+    # starts the clock
+    started = time.time()
+    # Grabs and displays random sentence
+    random_sent()
+    # Destroys previous button
+    print("Started. Click ENTER to Stop.")
+    # STOP! BUTTON
+    button = Button(master, text="STOP!", font="calibri, 18", fg="white",
+                    command=lambda: [button.place_forget(), check_entry()])
+    button.place(x=350, y=325, width=100)
+    button.config(bg="red")
+    master.bind("<Return>", check_entry)
 
-        # Results Frame
-        self.r = Frame(self.master, width=800, height=100, bg="black")
-        self.r.pack()
-        self.r.propagate(0)
 
-# generate a random sentence
-    def random_sent(self):
-        with open('responses/sentences.txt', 'r') as f:
-            self.r_sentence.destroy()
-            content = f.read()
-            sentences = content.splitlines()
-            self.sentence = random.choice(sentences)
-            self.r_sentence = Label(self.m, text=f"{self.sentence}", fg="white", font=("calibri", 18), bg="black")
-            self.r_sentence.pack()
+# START/STOP Button
+button = Button(master, text="START", font="calibri, 18", fg="white", command=lambda: [button.place_forget(), start()])
+button.place(x=350, y=325, width=100)
+button.config(bg="green")
 
-    def started(self):
-        # starts the clock
-        self.start = time.time()
-        # Grabs random sentence
-        self.random_sent()
-        # Destroys previous button
-        self.button.destroy()
-        print("Started. Click ENTER to Stop.")
-        # STOP! BUTTON
-        self.button = Button(self.go_frame, text="STOP!", font="calibri, 18", command=self.stop, fg="white", width=10)
-        self.button.pack(side=TOP, pady=10)
-        self.button.config(bg="red")
-        self.master.bind("<Return>", self.stop)
 
-    def incorrect_info(self):
+# Processes STOP and also displays start button
+def stop(event=None):
+    global total
+    # delete user entry once submitted
+    entry.delete(0, 'end')
+    # ends the clock
+    end = time.time()
+    # total time rounded 3 dp
+    total = end - started
+    total_rounded = round(total, 3)
+    words_per_minute()
 
-        self.response.destroy()
+    print("Stopped. Hit START to go again.")
 
-        with open('responses/incorrect.txt', 'r') as f:
-            content = f.read()
-            fails = content.splitlines()
-            fail = random.choice(fails)
-            self.response = Label(self.b, text=f"{fail}", fg="#ff3300", font=("calibri", 18), bg="black")
-            self.response.pack()
-
-    # calculate and return words per minute
-    def words_per_minute(self):
-        keystrokes = len(self.sentence)
-        words_per_min = round(keystrokes * 60) / self.total / 5
-        wpm_rounded = int(words_per_min)
-        self.wpm = Label(self.r, text=f"WPM: {wpm_rounded}", fg="lightgrey", font=("calibri", 18), bg="black")
-        self.wpm.pack()
-
-    # Processes STOP and also displays start button
-    def stop(self, event=None):
-
-        self.u_entry()
-        # delete user entry once submitted
-        self.entry.delete(0, 'end')
-        # destroys previous button
-        self.button.destroy()
-        # ends the clock
-        end = time.time()
-        # total time rounded 3 dp
-        self.total = end - self.start
-        total_rounded = round(self.total, 3)
-
-        print("Stopped. Hit START to go again.")
-
-        # START! BUTTON
-        self.button = Button(self.go_frame, text="START", font="calibri, 18", command=self.reset_all, fg="white",
-                                width=10)
-        self.button.pack(side=TOP, pady=10)
-        self.button.config(bg="green")
-        self.total_time = Label(self.r, text=f"TIME: {total_rounded}s", fg="lightgrey", bg="black",
+    # Clock stopped display START! button
+    button = Button(master, text="START", font="calibri, 18", fg="white",
+                                command=lambda: [button.place_forget(), start()])
+    button.place(x=350, y=325, width=100)
+    button.config(bg="green")
+    total_time = Label(master, text=f"TIME: {total_rounded}s", fg="lightgrey", bg="black",
                                 font="calibri 18")
-        self.total_time.pack()
-        self.words_per_minute()
-
-    def button(self):
-        return self.button
-
-    def u_entry(self):
-        u_input = self.entry.get()
-        if self.sentence == u_input:
-            self.response.destroy()
-            self.response = Label(self.b, text=f"Well Done!", fg="green", font=("calibri", 18), bg="black")
-            self.response.pack()
-        else:
-            self.incorrect_info()
-
-    def reset_all(self):
-        # reset all results
-        self.total_time.destroy()
-        self.incorrect_info()
-        self.wpm.destroy()
-        # Run started
-        self.started()
+    total_time.place(x=330, y=440)
+# words_per_minute()
 
 
-root = Tk()
-h = Home(root)
-root.mainloop()
+# return incorrect input error
+def incorrect_input():
+    with open('responses/incorrect.txt', 'r') as f:
+        content = f.read()
+        fails = content.splitlines()
+        fail = random.choice(fails)
+        response = Label(master, text=f"{fail}", fg="#ff3300", font=("calibri", 18), bg="black")
+        response.place(x=250, y=400)
+        button = Button(master, text="START", font="calibri, 18", fg="white",
+                        command=lambda: [button.place_forget(), response.place_forget(), start()])
+        button.place(x=350, y=325, width=100)
+        button.config(bg="green")
+
+
+def check_entry(event=None):
+    user_input = entry.get()
+    print(user_input)
+    if sentence == user_input:
+        response = Label(master, text=f"Well Done!", fg="green", font=("calibri", 18), bg="black")
+        response.place(x=342, y=280)
+        stop()
+    else:
+        incorrect_input()
+
+
+def words_per_minute():
+    keystrokes = len(sentence)
+    words_per_min = round(keystrokes * 60) / total / 5
+    wpm_rounded = int(words_per_min)
+    wpm = Label(master, text=f"WPM: {wpm_rounded}", fg="lightgrey", font=("calibri", 18), bg="black")
+    wpm.place(x=350, y=400)
+
+
+master.mainloop()
