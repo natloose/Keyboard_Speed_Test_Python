@@ -26,7 +26,7 @@ def random_sent():
         random_sentence.place(x=50, y=150, width=700, height=40)
 
 
-# display random sentence
+# Display random sentence
 r_sentence = Label(master, bg="black", textvariable=random_sent, fg="white")
 
 # User entry box
@@ -58,7 +58,7 @@ button.place(x=350, y=325, width=100)
 button.config(bg="green")
 
 
-# Processes STOP and also displays start button
+# Processes STOP and displays START button
 def stop(event=None):
     global total
     # delete user entry once submitted
@@ -80,10 +80,9 @@ def stop(event=None):
     total_time = Label(master, text=f"TIME: {total_rounded}s", fg="lightgrey", bg="black",
                                 font="calibri 18")
     total_time.place(x=330, y=440)
-# words_per_minute()
 
 
-# return incorrect input error
+# Display incorrect entry message
 def incorrect_input():
     with open('responses/incorrect.txt', 'r') as f:
         content = f.read()
@@ -97,9 +96,9 @@ def incorrect_input():
         button.config(bg="green")
 
 
+# Check user entry to determine what results are shown
 def check_entry(event=None):
     user_input = entry.get()
-    print(user_input)
     if sentence == user_input:
         response = Label(master, text=f"Well Done!", fg="green", font=("calibri", 18), bg="black")
         response.place(x=342, y=280)
