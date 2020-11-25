@@ -3,8 +3,8 @@ Calculate your keyboard typing speed in words per minute (WPM).
 
 1. Press START to receive a randomly selected sentence that you must write down in the input section below in as quick as time as possible. 
 2. Once finished click STOP! or hit Enter on your keyboard
-3. If input is equal to the randomly generated sentence your time and WPM will be displayed with a success message.  
-   If input does not equal the randomly generated sentence you will recieve an incorrect input message.
+3. If user input is equal to the randomly generated sentence your time and WPM will be displayed with a success message.  
+   If user input does not equal the randomly generated sentence you will recieve an incorrect input message.
    
    
    
